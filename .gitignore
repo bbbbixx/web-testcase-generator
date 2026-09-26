@@ -1,3 +1,4 @@
 .env
 testcases/
 *.xlsx
+testcases/
