@@ -331,12 +331,15 @@ testcases/ (หรือ tests/)
   - 🎯 **จำนวน Test Scenario ทั้งหมด (Total Scenarios):** ระบุจำนวนกลุ่ม TS (เช่น 3 กลุ่ม)
   - 🧪 **จำนวน Test Case ทั้งหมด (Total Test Cases):** ระบุจำนวนข้อ TC รวม (เช่น 12 ข้อ)
   - 🏷️ **บทบาทที่ครอบคลุม (Covered Roles):** เช่น ทุกบทบาท (Central Admin, Executive, Director, School Admin)
+- **ปุ่มและระบบคัดลอกข้อมูลราย Cell (Interactive Cell Copy Buttons):**
+  - แต่ละ Cell ข้อมูล (TC ID, TC Description, Test Step, Expected Result, Test Data) ต้องมี **ปุ่ม Copy (📋)** ปรากฏขึ้นเมื่อ Hover หรือคลิกเพื่อ Copy ข้อความใน Cell นั้นเข้า Clipboard ทันที
+  - มี Tooltip / Notification แสดงสถานะ "คัดลอกแล้ว!" (Copied!) เพื่อให้ Tester สะดวกในการ Copy ข้อมูลไปใส่ใน Excel / Jira / Test Management Tools ได้ง่ายที่สุด
 - **ตารางแสดงผลลำดับชั้น Excel (Excel Hierarchy View 1:1 กับ Excel ZETA):**
   - **แถว Function (สีม่วงเข้ม / Deep Purple):** แสดงรหัสและชื่อฟังก์ชันหลัก (`FN-STS-XX`)
   - **แถว Screen (สีเขียวเข้ม / Forest Green):** แสดงรหัสและชื่อหน้าจอ (`SC-STS-XX-YY`)
   - **แถว Test Scenario (สีน้ำเงินเข้ม / Royal Blue):** แสดงรหัสและชื่อกลุ่มทดสอบ (`TS-STS-XX-ZZ`)
   - **แถว Test Case (Card / Content Row):** แสดงรายละเอียด TC ID (`TC-STS-XX-ZZ-WW`), Description, Test Step, Expected Result, Test Data, Status
-- ออกแบบสวยงาม ทันสมัย มีฟอนต์ Sarabun/Inter อ่านง่าย รองรับการ Copy หรือเปิดพรีวิวใน Browser เสมือนเปิดไฟล์ Excel จริงทันที
+- ออกแบบสวยงาม ทันสมัย มีฟอนต์ Sarabun/Inter อ่านง่าย รองรับการ Copy ทีละ Cell หรือทั้งตารางเปิดพรีวิวใน Browser เสมือนเปิดไฟล์ Excel จริงทันที
 
 #### 3. ไฟล์ Playwright Spec (`.spec.ts`)
 - ไฟล์สคริปต์ Automated Test (Playwright / TypeScript) แยกตาม Test Scenario (`TS-STS-XX-01.spec.ts`, `TS-STS-XX-02.spec.ts`, ...)
