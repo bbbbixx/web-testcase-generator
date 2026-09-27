@@ -230,6 +230,12 @@ Skill นี้ใช้สำหรับเข้าไปสำรวจร�
 > 📌 **กฎการตั้งรหัส Test Case ID (TC ID):**
 > - รหัส TC ต้องสอดคล้องกับ TS เสมอ เช่น ภายใต้ TS-02 (ปุ่ม) ต้องเป็น `TC-STS-XX-02-YY` และภายใต้ TS-03 (แสดงผล) ต้องเป็น `TC-STS-XX-03-YY`
 
+> 🎯 **เกณฑ์จำนวน Test Cases ขั้นต่ำ (15+ Test Cases Rule):**
+> - **ทุกฟังก์ชัน (`FN-STS-XX`) จะต้องมีจำนวน Test Cases ไม่น้อยกว่า 15+ Test Cases (15 - 25 TCs)** เพื่อให้ครอบคลุมการทำงานทุกมิติ:
+>   1. **TS-01 (Inputs & Filters):** 5-8 TCs (Positive, Negative, Required, Format, Boundary, Duplicate, Filter, Search)
+>   2. **TS-02 (Buttons & Actions):** 5-8 TCs (ทุกปุ่ม, การเปิด/ปิด Modal, Confirm, Cancel, Action ผลการทำงาน)
+>   3. **TS-03 (Display & Permissions):** 5-8 TCs (UI Display, Dashboard, Timeline, Badges, Table Data, Scope & Role Permissions)
+
 ### รูปแบบโครงสร้างไฟล์ Test Cases
 
 ```text
@@ -297,51 +303,37 @@ Skill นี้ใช้สำหรับเข้าไปสำรวจร�
 
 ### 📁 รูปแบบโครงสร้างโฟลเดอร์ (Directory Hierarchy)
 ```text
-testcases/ (หรือ tests/)
+testcases/
 └── FN-STS-XX_<ชื่อฟังก์ชันภาษาไทย>/
-    ├── FN-STS-XX_<ชื่อฟังก์ชัน>.md        # ไฟล์ Markdown บันทึกการสำรวจ (Scrap findings) และ Test Cases ละเอียด
-    ├── FN-STS-XX_<ชื่อฟังก์ชัน>.html      # ไฟล์ HTML ตาราง Test Cases แบบโต้ตอบได้และสวยงามสำหรับเปิดดู/Copy
-    ├── TS-STS-XX-01.spec.ts              # Playwright Automated Test Script: ตรวจสอบการกรอกข้อมูล
-    ├── TS-STS-XX-02.spec.ts              # Playwright Automated Test Script: ตรวจสอบการทำงานของปุ่ม
-    └── TS-STS-XX-03.spec.ts              # Playwright Automated Test Script: ตรวจสอบการแสดงผล
+    ├── FN-STS-XX_<ชื่อฟังก์ชันภาษาไทย>.md       # เอกสาร Test Cases ภาษาไทย + ผลการ Scrap
+    ├── FN-STS-XX_<ชื่อฟังก์ชันภาษาไทย>.html     # Interactive Excel Hierarchy Table + Copy Button + Dashboard
+    ├── TS-STS-XX-01.spec.ts                     # Playwright automated test สำหรับ TS-01 (Inputs & Validations)
+    ├── TS-STS-XX-02.spec.ts                     # Playwright automated test สำหรับ TS-02 (Buttons & Actions)
+    └── TS-STS-XX-03.spec.ts                     # Playwright automated test สำหรับ TS-03 (Display & Permissions)
 ```
 
-> 📌 **ตัวอย่าง:** สำหรับฟังก์ชัน `FN-STS-02 แก้ไขข้อมูลส่วนตัว`
-> ```text
-> testcases/FN-STS-02_แก้ไขข้อมูลส่วนตัว/
-> ├── FN-STS-02_แก้ไขข้อมูลส่วนตัว.md
-> ├── FN-STS-02_แก้ไขข้อมูลส่วนตัว.html
-> ├── TS-STS-02-01.spec.ts
-> ├── TS-STS-02-02.spec.ts
-> └── TS-STS-02-03.spec.ts
-> ```
+> ⚠️ **คำสั่งเด็ดขาดเรื่องไฟล์:**
+> 1. **ห้ามสร้างไฟล์ `.csv` เด็ดขาด** (ไม่ต้องส่งออกหรือสร้างไฟล์ `.csv` ใดๆ ทั้งสิ้น)
+> 2. ทุกฟังก์ชันจะต้องสร้างครบทั้ง **`.md`**, **`.html`**, และ **`.spec.ts` (3 ไฟล์ TS-01, TS-02, TS-03)**
 
 ---
 
-### 📄 รายละเอียดของแต่ละไฟล์ในโฟลเดอร์:
+## 8. รูปแบบไฟล์ HTML (Interactive Excel Hierarchy Table)
 
-#### 1. ไฟล์ Markdown (`.md` Scrap & Test Cases)
-- บันทึก **System Exploration Findings** (URL, Elements, Form fields, Validations, Dropdowns, Table columns, Scope)
-- บันทึก **Test Cases ภาษาไทย** ตามโครงสร้าง `Screen (SC)` $\rightarrow$ `Scenario (TS)` $\rightarrow$ `Test Case (TC)`
+ไฟล์ `.html` ที่สร้างในแต่ละฟังก์ชันต้องมีองค์ประกอบดังต่อไปนี้:
 
-#### 2. ไฟล์ HTML (`.html` Test Cases Table)
-- **ส่วนหัวและการ์ดสรุปภาพรวม (Summary Statistics Dashboard Bar):**
-  ด้านบนของตาราง HTML ต้องมีการ์ดสรุปตัวเลขสถิติรวมของฟังก์ชันนั้นอย่างชัดเจนและสวยงามเสมอ:
-  - 🖥️ **จำนวน Screen ทั้งหมด (Total Screens):** ระบุจำนวน Screen (เช่น 5 หน้าจอ)
-  - 🎯 **จำนวน Test Scenario ทั้งหมด (Total Scenarios):** ระบุจำนวนกลุ่ม TS (เช่น 3 กลุ่ม)
-  - 🧪 **จำนวน Test Case ทั้งหมด (Total Test Cases):** ระบุจำนวนข้อ TC รวม (เช่น 12 ข้อ)
-  - 🏷️ **บทบาทที่ครอบคลุม (Covered Roles):** เช่น ทุกบทบาท (Central Admin, Executive, Director, School Admin)
-- **ปุ่มและระบบคัดลอกข้อมูลราย Cell (Interactive Cell Copy Buttons):**
-  - แต่ละ Cell ข้อมูล (TC ID, TC Description, Test Step, Expected Result, Test Data) ต้องมี **ปุ่ม Copy (📋)** ปรากฏขึ้นเมื่อ Hover หรือคลิกเพื่อ Copy ข้อความใน Cell นั้นเข้า Clipboard ทันที
-  - มี Tooltip / Notification แสดงสถานะ "คัดลอกแล้ว!" (Copied!) เพื่อให้ Tester สะดวกในการ Copy ข้อมูลไปใส่ใน Excel / Jira / Test Management Tools ได้ง่ายที่สุด
-- **ตารางแสดงผลลำดับชั้น Excel (Excel Hierarchy View 1:1 กับ Excel ZETA):**
-  - **แถว Function (สีม่วงเข้ม / Deep Purple):** แสดงรหัสและชื่อฟังก์ชันหลัก (`FN-STS-XX`)
-  - **แถว Screen (สีเขียวเข้ม / Forest Green):** แสดงรหัสและชื่อหน้าจอ (`SC-STS-XX-YY`)
-  - **แถว Test Scenario (สีน้ำเงินเข้ม / Royal Blue):** แสดงรหัสและชื่อกลุ่มทดสอบ (`TS-STS-XX-ZZ`)
-  - **แถว Test Case (Card / Content Row):** แสดงรายละเอียด TC ID (`TC-STS-XX-ZZ-WW`), Description, Test Step, Expected Result, Test Data, Status
-- ออกแบบสวยงาม ทันสมัย มีฟอนต์ Sarabun/Inter อ่านง่าย รองรับการ Copy ทีละ Cell หรือทั้งตารางเปิดพรีวิวใน Browser เสมือนเปิดไฟล์ Excel จริงทันที
-
-#### 3. ไฟล์ Playwright Spec (`.spec.ts`)
-- ไฟล์สคริปต์ Automated Test (Playwright / TypeScript) แยกตาม Test Scenario (`TS-STS-XX-01.spec.ts`, `TS-STS-XX-02.spec.ts`, ...)
-- อ้างอิง Locator และ Assertions ตามองค์ประกอบจริงที่สำรวจได้จากหน้าเว็บ
-
+1. **Dashboard Summary Statistics Bar ด้านบน:**
+   - การ์ดสรุปจำนวนหน้าจอ (Total Screens)
+   - การ์ดสรุปจำนวน Scenarios (Total Scenarios)
+   - การ์ดสรุปจำนวน Test Cases (Total Test Cases) — **ต้อง 15+ TCs**
+   - การ์ดสรุปขอบเขตบทบาทผู้ใช้งาน (Target Roles)
+2. **โครงสร้างตาราง 9 คอลัมน์มาตรฐาน (Excel ZETA Tree Hierarchy):**
+   - คอลัมน์: `Function` | `Screen` | `Test Scenario` | `Test Case ID` | `TC Description` | `Test Step` | `Expected Result` | `Test Data` | `Status`
+   - แถวเลเยอร์สี:
+     - `tr.row-fn` (สีม่วงเข้ม `#4c1d95`): แสดง Function
+     - `tr.row-sc` (สีเขียวเข้ม `#064e3b`): แสดง Screen (`SC-STS-XX-YY`)
+     - `tr.row-ts` (สีน้ำเงินเข้ม `#1e3a8a`): แสดง Test Scenario (`TS-STS-XX-ZZ`)
+     - `tr.row-tc` (พื้นหลังการ์ดมืด): แถว Test Cases พร้อมเว้น `col-blank` 3 คอลัมน์แรกเพื่อจำลองต้นไม้
+3. **ปุ่มคัดลอกทุกช่อง (`📋 คัดลอก`):**
+   - มีปุ่ม `📋 คัดลอก` บนทุก Cell ในตาราง
+   - มี Script แสดง Toast Notification เมื่อคัดลอกสำเร็จ
