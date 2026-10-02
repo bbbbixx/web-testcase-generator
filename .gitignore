@@ -1,4 +1,13 @@
 .env
-testcases/
+testcases/**
+!testcases/**/
+!testcases/**/*.spec.ts
+!testcases/**/*_report.md
+!testcases/helpers/auth.ts
+!testcases/test/extracted_testcases.json
+!testcases/TEST_COVERAGE.md
 *.xlsx
-testcases/
+node_modules/
+playwright-report/
+test-results/
+.auth/

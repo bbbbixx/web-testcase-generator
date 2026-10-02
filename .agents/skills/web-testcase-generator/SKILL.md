@@ -337,3 +337,24 @@ testcases/
 3. **ปุ่มคัดลอกทุกช่อง (`📋 คัดลอก`):**
    - มีปุ่ม `📋 คัดลอก` บนทุก Cell ในตาราง
    - มี Script แสดง Toast Notification เมื่อคัดลอกสำเร็จ
+
+
+---
+
+## 🔁 Workflow การ Extract, Sync เอกสาร และแก้ไข Playwright Spec Files
+
+ทุกครั้งที่ผู้ใช้งานสั่งให้สกัด (extract) ข้อมูลจาก HTML แล้วนำไปอัปเดตฟังก์ชัน ให้ทำตาม 4 ขั้นตอนนี้เสมอ:
+
+1. **Extract & Backup ข้อมูล:**
+   - สกัด Test Case ID, Description, Test Step (1, 2, 3...), Expected Result, Test Data
+   - บันทึกไฟล์ JSON (`extracted_testcases.json`) และ CSV (`extracted_testcases.csv`)
+2. **Update Markdown Documentation (`.md`):**
+   - อัปเดตไฟล์ `testcases/FN-STS-XX_<ชื่อฟังก์ชัน>/FN-STS-XX_<ชื่อฟังก์ชัน>.md` ให้ข้อมูลและ Test Steps ตรงตามที่ extract มา 100%
+3. **Align Playwright Automated Spec Files (`.spec.ts`):**
+   - อัปเดตไฟล์ `TS-STS-XX-01.spec.ts`, `TS-STS-XX-02.spec.ts`, `TS-STS-XX-03.spec.ts`
+   - ยึด **Test Step** (เรียงตามลำดับข้อ 1, 2, 3...) และ **Expected Result** เป็นหลักสำคัญสูงสุด ไม่ฝืนแก้สเปกเพื่อทำให้ผ่าน
+   - เรียกใช้ `loginWithSession(page, user, pass)` เพื่อดึง Session เดิมจาก `.auth/<user>.json` ป้องกัน Rate Limit
+   - ตัดการย้ายหน้าไป `/profile` ที่ไม่จำเป็นออก เพื่อเริ่มทดสอบจากหน้าหลัง Login ทันที
+4. **User Reporting & Handover:**
+   - เมื่ออัปเดตไฟล์เสร็จเรียบร้อย **ไม่ต้องสั่งรัน Playwright อัตโนมัติเอง** (เพื่อป้องกัน Rate Limit)
+   - สรุปรายการไฟล์และตัวอย่างคำสั่งรันให้ผู้ใช้งานนำไปสั่งรันทดสอบด้วยตนเอง
